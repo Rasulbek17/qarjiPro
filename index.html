@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101827">
+<title>By Rasul — Жеке қаржы есебі</title>
+<style>
+:root{--bg:#f3f6fb;--card:#fff;--text:#172033;--muted:#718096;--line:#e5eaf2;--blue:#3867e8;--blue2:#eaf0ff;--green:#159b68;--greenbg:#e8f7f0;--red:#df4d5a;--redbg:#fff0f1;--amber:#b7791f;--amberbg:#fff7e6;--shadow:0 8px 28px #1b2b4a0b}
+:root[data-theme=dark]{--bg:#0e1420;--card:#171f2d;--text:#edf2fa;--muted:#9aa8ba;--line:#293548;--blue:#7b9cff;--blue2:#202e4d;--green:#45d39a;--greenbg:#18372f;--red:#ff7882;--redbg:#3b242b;--amber:#f3c46c;--amberbg:#3b3020;--shadow:0 8px 28px #0003}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding-bottom:30px}
+button,input,select{font:inherit}button{cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:11px;padding:9px 13px;transition:.15s}button:hover{filter:brightness(.97);transform:translateY(-1px)}button:disabled{opacity:.45;cursor:not-allowed;transform:none}.primary{background:var(--blue);border-color:var(--blue);color:white}.danger{color:var(--red)}.quiet{background:transparent}
+.app{max-width:1120px;margin:auto;padding:22px 16px 50px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}.brand{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,#3867e8,#7b9cff);display:grid;place-items:center;color:white;font-size:23px}.brand h1{font-size:21px;margin:0}.sub{font-size:12px;color:var(--muted)}.actions{display:flex;gap:8px;flex-wrap:wrap}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:16px;box-shadow:var(--shadow);min-width:0}.metric .label{color:var(--muted);font-size:13px}.metric .value{font-size:25px;font-weight:750;letter-spacing:-.5px;margin-top:5px;overflow-wrap:anywhere}.metric .hint{font-size:12px;color:var(--muted);margin-top:3px}.green{color:var(--green)}.red{color:var(--red)}.blue{color:var(--blue)}
+.layout{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(290px,.8fr);gap:14px}.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:13px}.section-title h2{font-size:16px;margin:0}.muted{color:var(--muted)}.small{font-size:12px}
+.monthbar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:13px}.monthbar strong{font-size:18px}.monthbar .center{display:flex;align-items:center;gap:10px}
+.formgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr auto;gap:8px}input,select{width:100%;min-width:0;border:1px solid var(--line);border-radius:10px;padding:10px 11px;background:var(--bg);color:var(--text);outline:none}input:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 3px color-mix(in srgb,var(--blue) 15%,transparent)}.type-switch{display:flex;gap:7px;margin-bottom:12px}.type-switch button.active{background:var(--blue2);border-color:var(--blue);color:var(--blue);font-weight:650}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.toolbar>*{flex:1 1 130px}
+.tx{display:flex;align-items:center;gap:10px;padding:11px 0;border-top:1px solid var(--line)}.tx-icon{width:38px;height:38px;border-radius:12px;background:var(--bg);display:grid;place-items:center;flex:none}.tx-main{min-width:0;flex:1}.tx-title{font-weight:650;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tx-meta{font-size:12px;color:var(--muted)}.tx-amount{font-weight:750;white-space:nowrap}.tx-buttons{display:flex;gap:4px}.tx-buttons button{padding:5px 8px;font-size:12px}
+.empty{text-align:center;padding:28px 10px;color:var(--muted)}.barrow{display:grid;grid-template-columns:105px 1fr 95px;gap:9px;align-items:center;margin:12px 0;font-size:13px}.track{height:10px;background:var(--bg);border-radius:20px;overflow:hidden}.fill{height:100%;border-radius:20px;background:var(--red)}.fill.bluefill{background:var(--blue)}.barvalue{text-align:right;font-size:12px;color:var(--muted)}
+.budgetrow{padding:10px 0;border-top:1px solid var(--line)}.budgethead{display:flex;justify-content:space-between;gap:8px;font-size:13px;margin-bottom:7px}.budgethead b{white-space:nowrap}.budgetrow .track{height:9px}.budgetrow .fill{background:var(--green)}.budgetrow .fill.over{background:var(--red)}
+.notice{padding:10px 12px;border-radius:11px;background:var(--blue2);font-size:13px;margin-top:10px}.notice.warn{background:var(--amberbg);color:var(--amber)}.notice.good{background:var(--greenbg);color:var(--green)}
+.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}th{color:var(--muted);font-weight:600}td:last-child,th:last-child{text-align:right}
+.tabs{display:flex;gap:6px;overflow:auto;margin-bottom:13px}.tabs button{white-space:nowrap;font-size:13px}.tabs button.active{background:var(--blue2);color:var(--blue);border-color:var(--blue)}
+.footer{text-align:center;color:var(--muted);font-size:12px;margin-top:20px}
+.modal{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;padding:16px;z-index:20}.modal.show{display:flex}.dialog{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:19px;width:min(480px,100%);max-height:90vh;overflow:auto}.dialog h3{margin:0 0 14px}.dialog .field{margin:10px 0}.dialog label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.dialog-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
+.hidden{display:none!important}
+@media(max-width:850px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.layout{grid-template-columns:1fr}.formgrid{grid-template-columns:1fr 1fr}.formgrid .wide{grid-column:span 2}.formgrid button{grid-column:span 2}}
+@media(max-width:480px){.app{padding:14px 10px 35px}.top{align-items:flex-start}.brand h1{font-size:18px}.actions button{padding:8px}.metric .value{font-size:21px}.barrow{grid-template-columns:82px 1fr 80px;gap:6px}.tx-buttons{flex-direction:column}.formgrid{grid-template-columns:1fr 1fr}.monthbar strong{font-size:15px}}
+@media print{body{background:white;color:#111;padding:0}.app{max-width:none;padding:0}.top .actions,.formcard,.toolbar,.tx-buttons,.monthbar button,.tabs,.footer{display:none!important}.card{box-shadow:none;border:1px solid #ddd;break-inside:avoid}.layout{display:block}.grid{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top">
+ <div class="brand"><div class="logo">₸</div><div><h1>By Rasul</h1><div class="sub">Жеке қаржыңызды басқару жүйесі</div></div></div>
+ <div class="actions">
+  <button id="themeBtn" title="Тақырып">🌙</button>
+  <button id="backupBtn">⬇ Backup</button>
+  <button id="restoreBtn">⬆ Қалпына келтіру</button>
+  <button onclick="window.print()">🖨 Басып шығару</button>
+  <input id="restoreFile" type="file" accept="application/json" class="hidden">
+ </div>
+</header>
+
+<div class="monthbar">
+ <div class="center"><button id="prev">‹</button><strong id="monthTitle"></strong><button id="next">›</button></div>
+ <button id="todayBtn" class="quiet">Бүгінгі ай</button>
+</div>
+
+<section class="grid">
+ <div class="card metric"><div class="label">Жалпы кіріс</div><div class="value green" id="incomeTotal">0 ₸</div><div class="hint">Таңдалған ай</div></div>
+ <div class="card metric"><div class="label">Жалпы шығыс</div><div class="value red" id="expenseTotal">0 ₸</div><div class="hint">Таңдалған ай</div></div>
+ <div class="card metric"><div class="label">Ай соңындағы қалдық</div><div class="value" id="balanceTotal">0 ₸</div><div class="hint">Кіріс − шығыс</div></div>
+ <div class="card metric"><div class="label">Жинақ үлесі</div><div class="value blue" id="savingRate">0%</div><div class="hint">Кірістен қалған бөлік</div></div>
+</section>
+
+<div class="layout">
+ <main>
+  <section class="card formcard">
+   <div class="section-title"><h2>➕ Жаңа операция</h2><span class="small muted">Міндетті өрістерді толтырыңыз</span></div>
+   <div class="type-switch"><button class="active" data-type="expense">➖ Шығыс</button><button data-type="income">➕ Кіріс</button></div>
+   <form id="txForm">
+    <div class="formgrid">
+     <input id="txTitle" class="wide" maxlength="80" placeholder="Атауы (мысалы: азық-түлік)" required>
+     <select id="txCategory"></select>
+     <input id="txAmount" type="number" min="1" step="0.01" inputmode="decimal" placeholder="Сома (₸)" required>
+     <input id="txDate" type="date" required>
+     <button class="primary" type="submit" id="submitTx">Қосу</button>
+    </div>
+   </form>
+  </section>
+
+  <section class="card">
+   <div class="section-title"><h2>📋 Операциялар тарихы</h2><span class="small muted" id="txCount">0 жазба</span></div>
+   <div class="toolbar">
+    <input id="search" placeholder="🔎 Атауы бойынша іздеу...">
+    <select id="filterType"><option value="all">Барлық түрі</option><option value="income">Кіріс</option><option value="expense">Шығыс</option></select>
+    <select id="filterCategory"><option value="all">Барлық санат</option></select>
+    <select id="period"><option value="month">Осы ай</option><option value="year">Осы жыл</option><option value="all">Барлығы</option></select>
+   </div>
+   <div id="transactions"></div>
+   <div class="toolbar"><button id="csvBtn">📊 Excel (.xlsx) жүктеу</button><button id="printBtn">🧾 Есепті басып шығару</button></div>
+  </section>
+ </main>
+
+ <aside>
+  <section class="card">
+   <div class="section-title"><h2>🎯 Бюджет лимиттері</h2><button id="budgetBtn" class="quiet">＋ Орнату</button></div>
+   <div class="small muted">Әр санатқа айлық шығын шегін белгілеңіз.</div>
+   <div id="budgets"></div>
+   <div id="budgetNotice"></div>
+  </section>
+  <section class="card" style="margin-top:14px">
+   <div class="section-title"><h2>📊 Шығын құрылымы</h2></div>
+   <div id="categoryAnalysis"></div>
+  </section>
+  <section class="card" style="margin-top:14px">
+   <div class="section-title"><h2>📅 Жылдық шолу</h2><span class="small muted" id="yearLabel"></span></div>
+   <div id="yearAnalysis"></div>
+  </section>
+ </aside>
+</div>
+<div class="footer">Qarjy Pro · Деректер осы браузерде сақталады. Қауіпсіздік үшін Backup жасап отырыңыз.</div>
+</div>
+
+<div class="modal" id="editModal"><div class="dialog">
+ <h3 id="modalTitle">Операцияны өңдеу</h3>
+ <form id="editForm">
+  <div class="field"><label>Түрі</label><select id="editType"><option value="expense">Шығыс</option><option value="income">Кіріс</option></select></div>
+  <div class="field"><label>Атауы</label><input id="editTitle" maxlength="80" required></div>
+  <div class="field"><label>Санат</label><select id="editCategory"></select></div>
+  <div class="field"><label>Сома (₸)</label><input id="editAmount" type="number" min="1" step="0.01" required></div>
+  <div class="field"><label>Күні</label><input id="editDate" type="date" required></div>
+  <div class="dialog-actions"><button type="button" id="cancelEdit">Болдырмау</button><button class="primary" type="submit">Сақтау</button></div>
+ </form>
+</div></div>
+<div class="modal" id="budgetModal"><div class="dialog">
+ <h3>Айлық бюджет лимиті</h3>
+ <form id="budgetForm">
+  <div class="field"><label>Шығын санаты</label><select id="budgetCategory"></select></div>
+  <div class="field"><label>Лимит (₸)</label><input id="budgetAmount" type="number" min="1" step="1" required placeholder="Мысалы: 100000"></div>
+  <div class="dialog-actions"><button type="button" id="cancelBudget">Болдырмау</button><button class="primary" type="submit">Сақтау</button></div>
+ </form>
+</div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
+<script>
+'use strict';
+const CATEGORIES=['Тамақ','Көлік','Үй / коммуналдық','Киім','Денсаулық','Көңіл көтеру','Байланыс','Білім','Салық / төлемдер','Басқа'];
+const MONTHS=['Қаңтар','Ақпан','Наурыз','Сәуір','Мамыр','Маусым','Шілде','Тамыз','Қыркүйек','Қазан','Қараша','Желтоқсан'];
+const KEY='qarjy_pro_v1';
+const $=id=>document.getElementById(id);
+const today=new Date();
+let viewYear=today.getFullYear(),viewMonth=today.getMonth(),entryType='expense',editingId=null;
+let state={transactions:[],budgets:{},theme:'light'};
+function uid(){return (crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2))}
+function load(){
+ try{const raw=JSON.parse(localStorage.getItem(KEY)||'null');if(raw&&Array.isArray(raw.transactions)){state={...state,...raw};state.budgets=state.budgets||{};}}
+ catch(e){console.warn('Storage read error',e)}
+}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state));return true}catch(e){alert('Сақтау мүмкін болмады. Браузер жады толған болуы мүмкін. Backup жасап, қажетсіз деректерді тазалаңыз.');return false}}
+function money(n){return new Intl.NumberFormat('kk-KZ',{maximumFractionDigits:2}).format(Number(n)||0)+' ₸'}
+function monthKey(y=viewYear,m=viewMonth){return y+'-'+String(m+1).padStart(2,'0')}
+function monthTx(y=viewYear,m=viewMonth){const k=monthKey(y,m);return state.transactions.filter(t=>t.date&&t.date.slice(0,7)===k)}
+function total(arr,type){return arr.filter(t=>t.type===type).reduce((s,t)=>s+Number(t.amount),0)}
+function safe(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function fillSelects(){
+ const opts=CATEGORIES.map(c=>`<option value="${safe(c)}">${safe(c)}</option>`).join('');
+ $('txCategory').innerHTML=opts;$('editCategory').innerHTML=opts;$('budgetCategory').innerHTML=opts;
+ $('filterCategory').innerHTML='<option value="all">Барлық санат</option>'+opts;
+}
+function setType(type){
+ entryType=type;
+ document.querySelectorAll('.type-switch button').forEach(b=>b.classList.toggle('active',b.dataset.type===type));
+ $('txCategory').disabled=type==='income';
+ $('txCategory').style.opacity=type==='income'?'.5':'1';
+}
+document.querySelectorAll('.type-switch button').forEach(b=>b.addEventListener('click',()=>setType(b.dataset.type)));
+function addTransaction(e){
+ e.preventDefault();
+ const title=$('txTitle').value.trim(),amount=Number($('txAmount').value),date=$('txDate').value;
+ if(!title||!date||!Number.isFinite(amount)||amount<=0){alert('Атауды, күнді және нөлден үлкен соманы дұрыс енгізіңіз.');return}
+ const t={id:uid(),type:entryType,title,category:entryType==='income'?'Кіріс':$('txCategory').value,amount,date,createdAt:new Date().toISOString()};
+ state.transactions.push(t);save();$('txForm').reset();$('txDate').value=localDate();render();
+}
+function localDate(d=new Date()){return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')}
+function openEdit(id){
+ const t=state.transactions.find(x=>x.id===id);if(!t)return;editingId=id;
+ $('editType').value=t.type;$('editTitle').value=t.title;$('editCategory').value=t.type==='income'?'Тамақ':t.category;
+ $('editCategory').disabled=t.type==='income';$('editAmount').value=t.amount;$('editDate').value=t.date;
+ $('modalTitle').textContent='Операцияны өңдеу';$('editModal').classList.add('show');
+}
+function saveEdit(e){
+ e.preventDefault();const t=state.transactions.find(x=>x.id===editingId);if(!t)return;
+ const amount=Number($('editAmount').value),title=$('editTitle').value.trim(),date=$('editDate').value,type=$('editType').value;
+ if(!title||!date||!Number.isFinite(amount)||amount<=0){alert('Мәліметтерді дұрыс толтырыңыз.');return}
+ Object.assign(t,{title,amount,date,type,category:type==='income'?'Кіріс':$('editCategory').value});
+ save();$('editModal').classList.remove('show');render();
+}
+function removeTx(id){
+ const t=state.transactions.find(x=>x.id===id);if(!t)return;
+ if(!confirm(`«${t.title}» жазбасын жоясыз ба?`))return;
+ state.transactions=state.transactions.filter(x=>x.id!==id);save();render();
+}
+function renderTransactions(){
+ const q=$('search').value.trim().toLocaleLowerCase(),ft=$('filterType').value,fc=$('filterCategory').value,p=$('period').value;
+ let arr=state.transactions.filter(t=>{
+  const d=new Date(t.date+'T12:00:00');
+  if(p==='month'&&t.date.slice(0,7)!==monthKey())return false;
+  if(p==='year'&&d.getFullYear()!==viewYear)return false;
+  if(ft!=='all'&&t.type!==ft)return false;
+  if(fc!=='all'&&t.category!==fc)return false;
+  return !q||(t.title+' '+t.category).toLocaleLowerCase().includes(q);
+ }).sort((a,b)=>b.date.localeCompare(a.date)||String(b.createdAt).localeCompare(String(a.createdAt)));
+ $('txCount').textContent=arr.length+' жазба';
+ if(!arr.length){$('transactions').innerHTML='<div class="empty">Бұл сүзгі бойынша жазба табылмады.</div>';return}
+ $('transactions').innerHTML=arr.map(t=>`<div class="tx">
+  <div class="tx-icon">${t.type==='income'?'💰':'🧾'}</div>
+  <div class="tx-main"><div class="tx-title">${safe(t.title)}</div><div class="tx-meta">${safe(t.date)} · ${safe(t.category)}</div></div>
+  <div class="tx-amount ${t.type==='income'?'green':'red'}">${t.type==='income'?'+':'−'}${money(t.amount)}</div>
+  <div class="tx-buttons"><button data-edit="${safe(t.id)}" aria-label="Өңдеу">✎</button><button class="danger" data-del="${safe(t.id)}" aria-label="Жою">✕</button></div>
+ </div>`).join('');
+ $('transactions').querySelectorAll('[data-edit]').forEach(b=>b.addEventListener('click',()=>openEdit(b.dataset.edit)));
+ $('transactions').querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click',()=>removeTx(b.dataset.del)));
+}
+function renderMetrics(){
+ const arr=monthTx(),inc=total(arr,'income'),exp=total(arr,'expense'),bal=inc-exp,rate=inc?Math.round(bal/inc*100):0;
+ $('incomeTotal').textContent=money(inc);$('expenseTotal').textContent=money(exp);$('balanceTotal').textContent=money(bal);
+ $('balanceTotal').className='value '+(bal<0?'red':'green');$('savingRate').textContent=rate+'%';
+ $('monthTitle').textContent=MONTHS[viewMonth]+' '+viewYear;
+}
+function renderCategories(){
+ const arr=monthTx(),expenses=arr.filter(t=>t.type==='expense'),sum=total(arr,'expense');
+ const grouped={};expenses.forEach(t=>grouped[t.category]=(grouped[t.category]||0)+Number(t.amount));
+ const list=Object.entries(grouped).sort((a,b)=>b[1]-a[1]);
+ $('categoryAnalysis').innerHTML=!list.length?'<div class="empty">Шығыс енгізілген жоқ.</div>':list.map(([name,val])=>`<div class="barrow"><span>${safe(name)}</span><div class="track"><div class="fill" style="width:${sum?val/sum*100:0}%"></div></div><span class="barvalue">${money(val)} · ${Math.round(val/sum*100)}%</span></div>`).join('');
+}
+function renderBudgets(){
+ const arr=monthTx().filter(t=>t.type==='expense'),spent={};arr.forEach(t=>spent[t.category]=(spent[t.category]||0)+Number(t.amount));
+ const entries=Object.entries(state.budgets).filter(([k,v])=>Number(v)>0);
+ $('budgets').innerHTML=!entries.length?'<div class="empty">Әзірге лимит орнатылмаған.</div>':entries.map(([cat,limit])=>{
+  const used=spent[cat]||0,pct=used/Number(limit)*100,over=pct>100;
+  return `<div class="budgetrow"><div class="budgethead"><span>${safe(cat)}</span><b class="${over?'red':''}">${money(used)} / ${money(limit)}</b></div><div class="track"><div class="fill ${over?'over':''}" style="width:${Math.min(100,pct)}%"></div></div><div class="small muted">${Math.round(pct)}% пайдаланылды <button class="quiet danger" data-budget-del="${safe(cat)}" style="float:right;padding:0 4px">Жою</button></div></div>`;
+ }).join('');
+ const over=entries.filter(([c,l])=>(spent[c]||0)>Number(l));
+ $('budgetNotice').innerHTML=over.length?`<div class="notice warn">⚠️ Лимит асқан санат: ${over.map(x=>safe(x[0])).join(', ')}</div>`:entries.length?'<div class="notice good">✓ Белгіленген лимиттер сақталуда.</div>':'';
+ $('budgets').querySelectorAll('[data-budget-del]').forEach(b=>b.addEventListener('click',()=>{delete state.budgets[b.dataset.budgetDel];save();renderBudgets()}));
+}
+function renderYear(){
+ let inc=0,exp=0,months=[];
+ for(let m=0;m<12;m++){const a=monthTx(viewYear,m),i=total(a,'income'),e=total(a,'expense');inc+=i;exp+=e;months.push({m,i,e})}
+ const max=Math.max(1,...months.flatMap(x=>[x.i,x.e]));
+ $('yearLabel').textContent=String(viewYear);
+ $('yearAnalysis').innerHTML=`<div class="small muted">Жасыл — кіріс, қызыл — шығыс</div><div style="display:flex;align-items:end;gap:5px;height:120px;margin-top:12px">${months.map(x=>`<div title="${MONTHS[x.m]}: кіріс ${money(x.i)}, шығыс ${money(x.e)}" style="flex:1;height:100%;display:flex;align-items:end;justify-content:center;gap:2px"><i style="width:42%;height:${x.i/max*100}%;min-height:${x.i?2:0}px;background:var(--green);border-radius:3px 3px 0 0"></i><i style="width:42%;height:${x.e/max*100}%;min-height:${x.e?2:0}px;background:var(--red);border-radius:3px 3px 0 0"></i></div>`).join('')}</div><div style="display:flex;justify-content:space-between;margin-top:7px">${months.map(x=>`<span class="small muted">${MONTHS[x.m].slice(0,1)}</span>`).join('')}</div><div class="notice">Кіріс: <b class="green">${money(inc)}</b><br>Шығыс: <b class="red">${money(exp)}</b><br>Жылдық қалдық: <b>${money(inc-exp)}</b></div>`;
+}
+function render(){renderMetrics();renderTransactions();renderCategories();renderBudgets();renderYear();document.documentElement.dataset.theme=state.theme||'light';$('themeBtn').textContent=state.theme==='dark'?'☀️':'🌙'}
+async function csvExport(){
+ const p=$('period').value;
+ const arr=state.transactions.filter(t=>p==='all'||(p==='month'?t.date.slice(0,7)===monthKey():t.date.slice(0,4)===String(viewYear))).sort((a,b)=>a.date.localeCompare(b.date));
+ if(!arr.length){alert('Экспорт жасауға жазба жоқ.');return}
+ if(!window.ExcelJS){alert('Excel кітапханасы жүктелмеді. Интернет байланысын тексеріп, қайта көріңіз.');return}
+ const btn=$('csvBtn'),old=btn.textContent;btn.disabled=true;btn.textContent='Дайындалуда...';
+ try{
+  const wb=new ExcelJS.Workbook();wb.creator='By Rasul';wb.subject='Жеке қаржы есебі';wb.title='By Rasul — Қаржы есебі';wb.created=new Date();
+  const ws=wb.addWorksheet('Қаржы есебі',{views:[{state:'frozen',ySplit:7}]});
+  ws.columns=[{width:16},{width:20},{width:25},{width:42},{width:19}];
+  const periodName=p==='month'?MONTHS[viewMonth]+' '+viewYear:p==='year'?viewYear+' жыл':'Барлық кезең';
+  const ink='FF172033',muted='FF718096',blue='FF3867E8',pale='FFEAF0FF',line='FFE5EAF2',green='FF159B68',red='FFDF4D5A',white='FFFFFFFF',soft='FFF3F6FB';
+  const border={top:{style:'thin',color:{argb:line}},bottom:{style:'thin',color:{argb:line}},left:{style:'thin',color:{argb:line}},right:{style:'thin',color:{argb:line}}};
+  ws.mergeCells('A1:E1');ws.getCell('A1').value='By Rasul';ws.getCell('A1').font={name:'Aptos Display',size:20,bold:true,color:{argb:blue}};
+  ws.mergeCells('A2:E2');ws.getCell('A2').value='Жеке қаржыңызды басқару жүйесі';ws.getCell('A2').font={size:11,color:{argb:muted}};
+  ws.mergeCells('A3:E3');ws.getCell('A3').value='ҚАРЖЫ ЕСЕБІ · '+periodName.toLocaleUpperCase('kk-KZ');ws.getCell('A3').font={size:13,bold:true,color:{argb:ink}};
+  ws.mergeCells('A4:E4');ws.getCell('A4').value='Есеп жасалған күн: '+localDate();ws.getCell('A4').font={size:10,color:{argb:muted}};
+  const periodInc=total(arr,'income'),periodExp=total(arr,'expense'),periodBal=periodInc-periodExp,rate=periodInc?periodBal/periodInc:0;
+  ws.addRow([]);
+  const metric=ws.addRow(['КӨРСЕТКІШ','СОМА','','КӨРСЕТКІШ','МӘН']);
+  metric.font={bold:true,color:{argb:white}};metric.eachCell(c=>{c.fill={type:'pattern',pattern:'solid',fgColor:{argb:blue}};c.alignment={vertical:'middle'};c.border=border});
+  const summary=ws.addRow(['Жалпы кіріс',periodInc,'','Жазба саны',arr.length]);
+  const summary2=ws.addRow(['Жалпы шығыс',periodExp,'','Жинақ үлесі',rate]);
+  const summary3=ws.addRow(['Қалдық',periodBal,'','Есеп кезеңі',periodName]);
+  [summary,summary2,summary3].forEach((r,i)=>r.eachCell(c=>{c.border=border;c.alignment={vertical:'middle'};if(i===0)c.font={bold:true,color:{argb:green}};if(i===1)c.font={bold:true,color:{argb:red}};if(i===2)c.font={bold:true,color:{argb:ink}}}));
+  [summary,summary2,summary3].forEach(r=>{r.getCell(2).numFmt='#,##0.00 "₸"';});
+  summary2.getCell(5).numFmt='0%';
+  ws.addRow([]);
+  ws.mergeCells('A9:E9');ws.getCell('A9').value='ОПЕРАЦИЯЛАР ТІЗІМІ';ws.getCell('A9').font={bold:true,size:13,color:{argb:blue}};
+  const head=ws.addRow(['Күні','Түрі','Санат','Атауы','Сома']);
+  head.eachCell(c=>{c.font={bold:true,color:{argb:white}};c.fill={type:'pattern',pattern:'solid',fgColor:{argb:ink}};c.border=border;c.alignment={vertical:'middle'}});
+  arr.forEach(t=>{
+   const isIn=t.type==='income',r=ws.addRow([t.date,isIn?'Кіріс':'Шығыс',t.category,t.title,(isIn?1:-1)*Number(t.amount)]);
+   r.eachCell(c=>{c.border=border;c.alignment={vertical:'middle',wrapText:c.col===4}});
+   r.getCell(5).numFmt='#,##0.00 "₸"';r.getCell(5).font={bold:true,color:{argb:isIn?green:red}};
+   r.getCell(2).font={color:{argb:isIn?green:red},bold:true};
+  });
+  ws.addRow([]);
+  const expenseGroups={};arr.filter(t=>t.type==='expense').forEach(t=>expenseGroups[t.category]=(expenseGroups[t.category]||0)+Number(t.amount));
+  const groups=Object.entries(expenseGroups).sort((a,b)=>b[1]-a[1]);
+  const titleRow=ws.addRow(['ШЫҒЫН ҚҰРЫЛЫМЫ']);ws.mergeCells(`A${titleRow.number}:C${titleRow.number}`);titleRow.getCell(1).font={bold:true,size:13,color:{argb:blue}};
+  const gh=ws.addRow(['Санат','Шығын сомасы','Жалпы шығыннан үлесі']);gh.eachCell(c=>{c.font={bold:true,color:{argb:white}};c.fill={type:'pattern',pattern:'solid',fgColor:{argb:ink}};c.border=border});
+  groups.forEach(([cat,val])=>{const r=ws.addRow([cat,val,periodExp?val/periodExp:0]);r.eachCell(c=>c.border=border);r.getCell(2).numFmt='#,##0.00 "₸"';r.getCell(3).numFmt='0.0%'});
+  if(!groups.length)ws.addRow(['Шығыс жазбасы жоқ']);
+  ws.addRow([]);
+  const budgetTitle=ws.addRow(['БЮДЖЕТ ЛИМИТТЕРІ']);ws.mergeCells(`A${budgetTitle.number}:C${budgetTitle.number}`);budgetTitle.getCell(1).font={bold:true,size:13,color:{argb:blue}};
+  const bh=ws.addRow(['Санат','Лимит','Жұмсалғаны','Қалған лимит','Орындалуы']);bh.eachCell(c=>{c.font={bold:true,color:{argb:white}};c.fill={type:'pattern',pattern:'solid',fgColor:{argb:ink}};c.border=border});
+  const monthExpenses=monthTx().filter(t=>t.type==='expense'),spent={};monthExpenses.forEach(t=>spent[t.category]=(spent[t.category]||0)+Number(t.amount));
+  const budgetEntries=Object.entries(state.budgets).filter(([,v])=>Number(v)>0);
+  budgetEntries.forEach(([cat,lim])=>{const used=spent[cat]||0,limit=Number(lim),r=ws.addRow([cat,limit,used,limit-used,used/limit]);r.eachCell(c=>c.border=border);[2,3,4].forEach(i=>r.getCell(i).numFmt='#,##0.00 "₸"');r.getCell(5).numFmt='0.0%';if(used>limit)r.getCell(5).font={bold:true,color:{argb:red}}});
+  if(!budgetEntries.length)ws.addRow(['Бюджет лимиттері орнатылмаған']);
+  ws.addRow([]);
+  const yearTitle=ws.addRow(['ЖЫЛДЫҚ ШОЛУ']);ws.mergeCells(`A${yearTitle.number}:C${yearTitle.number}`);yearTitle.getCell(1).font={bold:true,size:13,color:{argb:blue}};
+  const yh=ws.addRow(['Ай','Кіріс','Шығыс','Қалдық']);yh.eachCell(c=>{c.font={bold:true,color:{argb:white}};c.fill={type:'pattern',pattern:'solid',fgColor:{argb:ink}};c.border=border});
+  let yi=0,ye=0;
+  for(let m=0;m<12;m++){const a=state.transactions.filter(t=>t.date&&t.date.slice(0,7)===monthKey(viewYear,m)),ii=total(a,'income'),ee=total(a,'expense');yi+=ii;ye+=ee;const r=ws.addRow([MONTHS[m],ii,ee,ii-ee]);r.eachCell(c=>c.border=border);for(let j=2;j<=4;j++)r.getCell(j).numFmt='#,##0.00 "₸"';r.getCell(2).font={color:{argb:green}};r.getCell(3).font={color:{argb:red}}}
+  const yr=ws.addRow(['ЖЫЛ БОЙЫ',yi,ye,yi-ye]);yr.eachCell(c=>{c.border=border;c.font={bold:true}});for(let j=2;j<=4;j++)yr.getCell(j).numFmt='#,##0.00 "₸"';
+  ws.autoFilter={from:{row:10,column:1},to:{row:10+arr.length,column:5}};
+  ws.pageSetup={paperSize:ws.PAPER_SIZE_A4,orientation:'landscape',fitToPage:true,fitToWidth:1,fitToHeight:0,printTitlesRow:'1:10',margins:{left:.25,right:.25,top:.5,bottom:.5,header:.2,footer:.2}};
+  ws.headerFooter={oddFooter:'&LBy Rasul&CҚаржы есебі&RБет &P / &N'};
+  ws.eachRow(row=>row.height=row.height||21);
+  const buffer=await wb.xlsx.writeBuffer();
+  const blob=new Blob([buffer],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download='By-Rasul-karzhy-esebi-'+localDate()+'.xlsx';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);
+ }catch(err){console.error(err);alert('Excel файлын жасау кезінде қате шықты: '+(err.message||err))}
+ finally{btn.disabled=false;btn.textContent=old}
+}
+function backup(){
+ const blob=new Blob([JSON.stringify({app:'Qarjy Pro',version:1,exportedAt:new Date().toISOString(),...state},null,2)],{type:'application/json'});
+ const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='qarjy-backup-'+localDate()+'.json';a.click();URL.revokeObjectURL(url);
+}
+function restoreFile(file){
+ if(!file)return;const reader=new FileReader();
+ reader.onload=()=>{try{const data=JSON.parse(reader.result);if(!data||!Array.isArray(data.transactions))throw new Error('Файл форматы сәйкес емес');
+  if(!confirm('Қазіргі деректер импортталған деректермен ауыстырылады. Жалғастырасыз ба?'))return;
+  state.transactions=data.transactions.filter(t=>t&&t.id&&['income','expense'].includes(t.type)&&Number(t.amount)>0&&t.date);
+  state.budgets=data.budgets&&typeof data.budgets==='object'?data.budgets:{};state.theme=data.theme==='dark'?'dark':'light';save();render();alert('Backup сәтті қалпына келтірілді.');
+ }catch(e){alert('Файлды оқу мүмкін болмады: '+e.message)}};
+ reader.readAsText(file);
+}
+$('txForm').addEventListener('submit',addTransaction);$('editForm').addEventListener('submit',saveEdit);
+$('cancelEdit').onclick=()=>$('editModal').classList.remove('show');
+$('editType').onchange=()=>{$('editCategory').disabled=$('editType').value==='income'};
+$('budgetBtn').onclick=()=>$('budgetModal').classList.add('show');
+$('cancelBudget').onclick=()=>$('budgetModal').classList.remove('show');
+$('budgetForm').addEventListener('submit',e=>{e.preventDefault();const c=$('budgetCategory').value,a=Number($('budgetAmount').value);if(a<=0)return;state.budgets[c]=a;save();$('budgetModal').classList.remove('show');$('budgetForm').reset();renderBudgets()});
+$('prev').onclick=()=>{viewMonth--;if(viewMonth<0){viewMonth=11;viewYear--}render()};
+$('next').onclick=()=>{viewMonth++;if(viewMonth>11){viewMonth=0;viewYear++}render()};
+$('todayBtn').onclick=()=>{viewYear=today.getFullYear();viewMonth=today.getMonth();render()};
+['search','filterType','filterCategory','period'].forEach(id=>$(id).addEventListener(id==='search'?'input':'change',renderTransactions));
+$('csvBtn').onclick=csvExport;$('printBtn').onclick=()=>window.print();
+$('backupBtn').onclick=backup;$('restoreBtn').onclick=()=>$('restoreFile').click();
+$('restoreFile').onchange=e=>{restoreFile(e.target.files[0]);e.target.value=''};
+$('themeBtn').onclick=()=>{state.theme=state.theme==='dark'?'light':'dark';save();render()};
+$('txDate').value=localDate();
+load();fillSelects();render();setType('expense');
+</script>
+</body>
+</html>
